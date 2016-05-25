@@ -21,8 +21,8 @@ class TaskController {
         
         let moc = Stack.sharedStack.managedObjectContext
         
-        return (try? moc.executeFetchRequest(request)) as? [Task] ?? []
-        let completedTasks =
+        let tasks = (try? moc.executeFetchRequest(request)) as? [Task] ?? []
+        return tasks.filter({$0.isComplete == true})
     }
     
     var inCompletedTasks: [Task] {
@@ -31,7 +31,14 @@ class TaskController {
         
         let moc = Stack.sharedStack.managedObjectContext
         
-        return (try? moc.executeFetchRequest(request)) as? [Task] ?? []
+        let tasks = (try? moc.executeFetchRequest(request)) as? [Task] ?? []
+        return tasks.filter({$0.isComplete == false})
+    }
+    
+    func addTask(name: String) {
+        
+        let _ = Task(name: name)
+        saveToPersistentStore()
     }
     
 }
