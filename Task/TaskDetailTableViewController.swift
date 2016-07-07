@@ -9,15 +9,20 @@
 import UIKit
 
 class TaskDetailTableViewController: UITableViewController {
+    
+    var task: Task?
+    var dueDateValue: NSDate?
 
+    @IBOutlet weak var taskNameTextField: UITextField!
+    @IBOutlet weak var taskDueTextField: UITextField!
+    @IBOutlet weak var taskNotesTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        if let task = task {
+            updateWithTask(task)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,6 +41,17 @@ class TaskDetailTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
+    
+    // MARK: - Actions
+    
+    @IBAction func saveButtonTapped(sender: AnyObject) {
+        
+        updateTask()
+        navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    
+    
 
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -91,5 +107,24 @@ class TaskDetailTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func updateTask() {
+        
+        guard let name = taskNameTextField.text else {return}
+        let due = dueDateValue
+        let notes = taskNotesTextView.text
+        
+        if let task = self.task {
+            TaskController.sharedController
+        }
+    }
+    
+func updateWithTask(task: Task) {
+        self.task = task
+        
+        title = task.name
+    taskNameTextField.text = task.name
+    
+        
+    }
 }
